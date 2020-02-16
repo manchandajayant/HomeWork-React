@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Quote from "./quote";
+import Search from "./Form";
 
 export default class QuoteSearcher extends Component {
   state = {
@@ -93,6 +94,7 @@ export default class QuoteSearcher extends Component {
       return (
         <div>
           <h1>Quotations for y'all</h1>
+          <Search />
           <div>
             Like Counter: {this.likeness()} / Dislike Counter:
             {this.disLikeness()}
