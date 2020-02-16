@@ -1,23 +1,32 @@
 import React, { Component } from "react";
-import propTypes from "prop-types";
+
+import "./quote.css";
 
 export default class Quote extends Component {
-  static propTypes = {
-    quoteText: propTypes.string.isRequired,
-    quoteAuthor: propTypes.string.isRequired
+  state = {
+    isClicked: false
+  };
+  changeColor = () => {
+    this.setState({ isClicked: true });
+  };
+  likeProp = () => {
+    this.props.updateLike(this.props.quoteId);
+    this.changeColor();
+  };
+
+  dislikeProp = () => {
+    this.props.updateDislike(this.props.quoteId);
+    this.changeColor();
   };
 
   render() {
+    console.log("new", this.state.isClicked);
     return (
       <div>
-        <p>{this.props.quoteText}</p>
+        <p className={this.isClicked ? "but" : ""}>{this.props.quoteText}</p>
         <p>By:{this.props.quoteAuthor}</p>
-        <button onClick={() => this.props.updateLike(this.props.quoteId)}>
-          Like
-        </button>
-        <button onClick={() => this.props.updateDislike(this.props.quoteId)}>
-          Dislike
-        </button>
+        <button onClick={this.likeProp}>Like</button>
+        <button onClick={this.dislikeProp}>Dislike</button>
       </div>
     );
   }

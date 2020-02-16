@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Quote from "./quote";
 import Search from "./Form";
+import "./quote.css";
 
 export default class QuoteSearcher extends Component {
   state = {
@@ -12,7 +13,7 @@ export default class QuoteSearcher extends Component {
 
   //Fetching Data
   componentDidMount() {
-    fetch(`https://quote-garden.herokuapp.com/quotes/search/${this.search}`)
+    fetch("https://quote-garden.herokuapp.com/quotes/search/tree")
       .then(res => res.json())
       .then(data => {
         const quotesFetched = data.results.map(quoteDestructered => ({
@@ -43,7 +44,7 @@ export default class QuoteSearcher extends Component {
         quote.quoteId === id ? { ...quote, likes: quote.likes + 1 } : quote
       )
     });
-    console.log(this.state.quotes);
+    // console.log(this.state.quotes);
   };
   //Updating the user dislike as per Quote Id
   updateDislike = id => {
@@ -74,6 +75,7 @@ export default class QuoteSearcher extends Component {
     return x;
   };
 
+  //value as input in the form
   handleChange = event => {
     this.setState({
       search: event.target.value
@@ -83,6 +85,7 @@ export default class QuoteSearcher extends Component {
   //rendering data
   render() {
     const { search } = this.state;
+    //console.log("this is clicked", this.state.isClicked);
     console.log("Total no. of likes", this.likeness());
     console.log("Total no. of dislikes", this.disLikeness());
     //if data is being fetched, shows loading
@@ -116,6 +119,7 @@ export default class QuoteSearcher extends Component {
                 quoteId={renderNewState.quoteId}
                 updateLike={this.updateLike}
                 updateDislike={this.updateDislike}
+                changeColor={this.changeColor}
               />
             ))}
           </p>

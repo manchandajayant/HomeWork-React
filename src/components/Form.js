@@ -11,7 +11,7 @@ export default class Search extends Component {
     return (
       <div>
         <p>Search:</p>
-        <input type="text" onChange={this.handleChange} name="search" />
+        <input type="text" onChange={this.props.handleChange} name="search" />
 
         <input type="submit" value="Search" />
       </div>
