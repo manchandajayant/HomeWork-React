@@ -3,9 +3,7 @@ import Quote from "./quote";
 
 export default class QuoteSearcher extends Component {
   state = {
-    quotes: null,
-    totalLikes: [],
-    totalDislikes: 0
+    quotes: []
   };
 
   componentDidMount() {
@@ -19,12 +17,9 @@ export default class QuoteSearcher extends Component {
           likes: 0,
           dislikes: 0
         }));
-        // const liks = Likes.map(likes => ({
-        //   numLikes: likes.numLikes
-        // }));
-        // this.increment(liks);
+
         this.fetchUpdate(quotesFetched);
-        console.log(quotesFetched);
+        //console.log(quotesFetched);
       });
   }
 
@@ -35,13 +30,22 @@ export default class QuoteSearcher extends Component {
   }
 
   updateLike = id => {
-    const arr = this.state.quotes.filter(quote => quote.quoteId === id);
-    // console.log(arr);
-    // this.setState({
-    //   [arr[0].quoteId]: quotes[arr[0].quoteId] + 1
-    // });
-    // console.log(arr[0].quoteId);
-    // console.log(this.state.quotes[0].likes);
+    this.setState({
+      quotes: this.state.quotes.map(quote =>
+        quote.quoteId === id ? { ...quote, likes: quote.likes + 1 } : quote
+      )
+    });
+    console.log(this.state.quotes);
+  };
+  updateDislike = id => {
+    this.setState({
+      quotes: this.state.quotes.map(quote =>
+        quote.quoteId === id
+          ? { ...quote, dislikes: quote.dislikes + 1 }
+          : quote
+      )
+    });
+    //console.log(this.state.quotes[0].dislikes);
   };
 
   render() {
@@ -57,8 +61,8 @@ export default class QuoteSearcher extends Component {
         <div>
           <h1>Quotations for y'all</h1>
           <div>
-            Like Counter:{this.state.numLikes}/Dislike Counter:
-            {this.state.numDislikes}
+            Like Counter:{this.state.quotes.likes} / Dislike Counter:
+            {this.state.quotes.dislikes}
           </div>
           <p>
             {this.state.quotes.map((renderNewState, index) => (
@@ -66,8 +70,9 @@ export default class QuoteSearcher extends Component {
                 quoteText={renderNewState.quoteText}
                 quoteAuthor={renderNewState.quoteAuthor}
                 key={index}
-                updateLike={this.updateLike}
                 quoteId={renderNewState.quoteId}
+                updateLike={this.updateLike}
+                updateDislike={this.updateDislike}
               />
             ))}
           </p>
