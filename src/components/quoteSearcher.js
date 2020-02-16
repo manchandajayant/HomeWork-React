@@ -6,6 +6,7 @@ export default class QuoteSearcher extends Component {
     quotes: []
   };
 
+  //Fetching Data
   componentDidMount() {
     fetch("https://quote-garden.herokuapp.com/quotes/search/tree")
       .then(res => res.json())
@@ -19,16 +20,17 @@ export default class QuoteSearcher extends Component {
         }));
 
         this.fetchUpdate(quotesFetched);
-        //console.log(quotesFetched);
+        console.log(quotesFetched);
       });
   }
-
+  //Updating Quotes with Fetched Data
   fetchUpdate(quotesFetched) {
     this.setState({
       quotes: quotesFetched
     });
   }
 
+  //Updating the User like as per Quote Id
   updateLike = id => {
     this.setState({
       quotes: this.state.quotes.map(quote =>
@@ -37,6 +39,7 @@ export default class QuoteSearcher extends Component {
     });
     console.log(this.state.quotes);
   };
+  //Updating the user dislike as per Quote Id
   updateDislike = id => {
     this.setState({
       quotes: this.state.quotes.map(quote =>
@@ -48,7 +51,27 @@ export default class QuoteSearcher extends Component {
     //console.log(this.state.quotes[0].dislikes);
   };
 
+  //Counting the Number of likes bieng clicked
+  likeness = () => {
+    const arr = this.state.quotes.map(lk => lk.likes);
+    const y = arr.reduce((accumulator, currentvalue) => {
+      return accumulator + currentvalue;
+    }, 0);
+    return y;
+  };
+  //counting the Number of dislikes being clicked
+  disLikeness = () => {
+    const arr = this.state.quotes.map(lk => lk.dislikes);
+    const x = arr.reduce((accumulator, currentvalue) => {
+      return accumulator + currentvalue;
+    }, 0);
+    return x;
+  };
+
+  //rendering data
   render() {
+    console.log("Total no. of likes", this.likeness());
+    console.log("Total no. of dislikes", this.disLikeness());
     if (this.state.quotes === null && "Loading...") {
       return (
         <div>
@@ -61,8 +84,8 @@ export default class QuoteSearcher extends Component {
         <div>
           <h1>Quotations for y'all</h1>
           <div>
-            Like Counter:{this.state.quotes.likes}/Dislike Counter:
-            {this.state.quotes.dislikes}
+            Like Counter: {this.likeness()} / Dislike Counter:
+            {this.disLikeness()}
           </div>
           <p>
             {this.state.quotes.map((renderNewState, index) => (
