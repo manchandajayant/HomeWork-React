@@ -72,13 +72,15 @@ export default class QuoteSearcher extends Component {
   render() {
     console.log("Total no. of likes", this.likeness());
     console.log("Total no. of dislikes", this.disLikeness());
-    if (this.state.quotes === null && "Loading...") {
+    //if data is being fetched, shows loading
+    if (this.state.quotes === []) {
       return (
         <div>
           <h1>Quotations for y'all</h1>
           <p>"Loading..."</p>
         </div>
       );
+      //else returning the fetched data
     } else {
       return (
         <div>
