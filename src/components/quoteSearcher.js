@@ -3,7 +3,9 @@ import Quote from "./quote";
 
 export default class QuoteSearcher extends Component {
   state = {
-    quotes: []
+    quotes: [],
+    loading: true,
+    error: true
   };
 
   //Fetching Data
@@ -26,7 +28,9 @@ export default class QuoteSearcher extends Component {
   //Updating Quotes with Fetched Data
   fetchUpdate(quotesFetched) {
     this.setState({
-      quotes: quotesFetched
+      quotes: quotesFetched,
+      loading: false,
+      error: false
     });
   }
 
@@ -73,15 +77,19 @@ export default class QuoteSearcher extends Component {
     console.log("Total no. of likes", this.likeness());
     console.log("Total no. of dislikes", this.disLikeness());
     //if data is being fetched, shows loading
-    if (this.state.quotes === []) {
+    if (this.state.loading) {
       return (
         <div>
           <h1>Quotations for y'all</h1>
           <p>"Loading..."</p>
         </div>
       );
-      //else returning the fetched data
-    } else {
+      //Error Message incase of Error
+    } else if (this.state.error) {
+      return <div>Sorry!! Error Loading Page</div>;
+    }
+    //else returning the fetched data
+    else {
       return (
         <div>
           <h1>Quotations for y'all</h1>
