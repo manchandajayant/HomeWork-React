@@ -61,7 +61,7 @@ export default class QuoteSearcher extends Component {
         <div>
           <h1>Quotations for y'all</h1>
           <div>
-            Like Counter:{this.state.quotes.likes} / Dislike Counter:
+            Like Counter:{this.state.quotes.likes}/Dislike Counter:
             {this.state.quotes.dislikes}
           </div>
           <p>
