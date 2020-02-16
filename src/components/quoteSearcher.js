@@ -4,6 +4,7 @@ import Search from "./Form";
 
 export default class QuoteSearcher extends Component {
   state = {
+    search: "",
     quotes: [],
     loading: true,
     error: true
@@ -11,7 +12,7 @@ export default class QuoteSearcher extends Component {
 
   //Fetching Data
   componentDidMount() {
-    fetch("https://quote-garden.herokuapp.com/quotes/search/tree")
+    fetch(`https://quote-garden.herokuapp.com/quotes/search/${this.search}`)
       .then(res => res.json())
       .then(data => {
         const quotesFetched = data.results.map(quoteDestructered => ({
@@ -58,7 +59,7 @@ export default class QuoteSearcher extends Component {
 
   //Counting the Number of likes bieng clicked
   likeness = () => {
-    const arr = this.state.quotes.map(lk => lk.likes);
+    const arr = this.state.quotes.map(a => a.likes);
     const y = arr.reduce((accumulator, currentvalue) => {
       return accumulator + currentvalue;
     }, 0);
@@ -66,15 +67,22 @@ export default class QuoteSearcher extends Component {
   };
   //counting the Number of dislikes being clicked
   disLikeness = () => {
-    const arr = this.state.quotes.map(lk => lk.dislikes);
+    const arr = this.state.quotes.map(b => b.dislikes);
     const x = arr.reduce((accumulator, currentvalue) => {
       return accumulator + currentvalue;
     }, 0);
     return x;
   };
 
+  handleChange = event => {
+    this.setState({
+      search: event.target.value
+    });
+  };
+
   //rendering data
   render() {
+    const { search } = this.state;
     console.log("Total no. of likes", this.likeness());
     console.log("Total no. of dislikes", this.disLikeness());
     //if data is being fetched, shows loading

@@ -2,20 +2,18 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class Search extends Component {
-  // static PropTypes = {
-  //   search: PropTypes.func.isRequired
-  // };
+  handleSubmit = event => {
+    event.preventDefault();
+  };
 
   render() {
+    console.log(this.state);
     return (
       <div>
-        <form>
-          <label>
-            Search:
-            <input type="text" search="search" />
-          </label>
-          <input type="submit" value="Search" />
-        </form>
+        <p>Search:</p>
+        <input type="text" onChange={this.handleChange} name="search" />
+
+        <input type="submit" value="Search" />
       </div>
     );
   }
