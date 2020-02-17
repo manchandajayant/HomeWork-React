@@ -4,10 +4,14 @@ import "./quote.css";
 
 export default class Quote extends Component {
   state = {
-    isClicked: false
+    isClicked: false,
+    isClickedDislike: false
   };
   changeColor = () => {
     this.setState({ isClicked: true });
+  };
+  changeColorDislikes = () => {
+    this.setState({ isClickedDislike: true });
   };
   likeProp = () => {
     this.props.updateLike(this.props.quoteId);
@@ -16,7 +20,7 @@ export default class Quote extends Component {
 
   dislikeProp = () => {
     this.props.updateDislike(this.props.quoteId);
-    this.changeColor();
+    this.changeColorDislikes();
   };
 
   render() {
@@ -26,6 +30,8 @@ export default class Quote extends Component {
     console.log("new", this.state.isClicked);
     if (this.state.isClicked) {
       btn.color = "green";
+    } else if (this.state.isClickedDislike) {
+      btn.color = "red";
     }
     return (
       <div>
