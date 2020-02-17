@@ -25,7 +25,7 @@ export default class Quote extends Component {
     };
     console.log("new", this.state.isClicked);
     if (this.state.isClicked) {
-      btn.color = "red";
+      btn.color = "green";
     }
     return (
       <div>
